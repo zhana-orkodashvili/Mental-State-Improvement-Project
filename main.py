@@ -6,7 +6,6 @@ from teams_notifier import create_payload, send_to_teams
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-
 def main():
     logging.info("Starting the process to fetch image and quote and send to Teams.")
 
@@ -28,8 +27,6 @@ def main():
 
     # Sending to Teams channel
     send_to_teams(payload)
-
-
 
 if __name__ == "__main__":
     main()

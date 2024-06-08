@@ -1,17 +1,17 @@
-import os
-import json
-import requests
-import logging
-from utils import load_env_vars
+from os import getenv
+from requests import post
+from json import dumps
+from logging import getLogger, INFO
+from dotenv import load_dotenv
 
 # Load environment variables
-load_env_vars()
+load_dotenv()
 
 # Set up logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger = getLogger(__name__)
+logger.setLevel(INFO)
 
-TEAMS_WEBHOOK_URL = os.getenv('TEAMS_WEBHOOK_URL')
+TEAMS_WEBHOOK_URL = getenv('TEAMS_WEBHOOK_URL')
 
 def create_payload(image_url, image_description, quote, author):
     payload = {
@@ -32,14 +32,14 @@ def create_payload(image_url, image_description, quote, author):
             }
         ]
     }
-    logger.debug(f"Created payload: {json.dumps(payload, indent=4)}")
+    logger.debug(f"Created payload: {dumps(payload, indent=4)}")
     return payload
 
 def send_to_teams(payload):
     headers = {
         'Content-Type': 'application/json'
     }
-    response = requests.post(TEAMS_WEBHOOK_URL, headers=headers, data=json.dumps(payload))
+    response = post(TEAMS_WEBHOOK_URL, headers=headers, data=dumps(payload))
     if response.status_code == 200:
         logger.info("Message sent successfully!")
     else:
