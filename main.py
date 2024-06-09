@@ -1,7 +1,7 @@
 import logging
-from image_fetcher import get_random_image
-from quote_fetcher import get_random_quote
-from teams_notifier import create_payload, send_to_teams
+from src.image_fetcher import get_random_image
+from src.quote_fetcher import get_random_quote
+from src.teams_notifier import create_payload, send_to_teams
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -28,5 +28,3 @@ def main():
     # Sending to Teams channel
     send_to_teams(payload)
 
-if __name__ == "__main__":
-    main()
