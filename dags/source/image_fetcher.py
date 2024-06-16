@@ -4,6 +4,7 @@ from logging import error, info
 
 from requests import get
 from airflow.exceptions import AirflowException
+from airflow.models import Variable
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,7 +18,8 @@ def get_random_image(**kwargs):
         dict: A dictionary containing the URL of the image and its description.
     """
     UNSPLASH_ACCESS_KEY = getenv("UNSPLASH_ACCESS_KEY")
-    url = f"https://api.unsplash.com/photos/random?client_id={UNSPLASH_ACCESS_KEY}"
+    unsplash_base_url = Variable.get("unsplash_base_url")
+    url = f"{unsplash_base_url}{UNSPLASH_ACCESS_KEY}"
     response = get(url)
 
     if response.status_code != 200:
